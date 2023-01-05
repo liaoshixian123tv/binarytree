@@ -8,15 +8,22 @@ type Input struct {
 
 // Node 節點
 type Node struct {
-	Level    int     `json:"level"`
-	Name     string  `json:"name"`
-	Children []*Node `json:"children"`
+	Level    int    `json:"level"`
+	Name     string `json:"name"`
+	Children []Node `json:"children"`
 }
 
-// NewNode 新增節點
-func NewNode(level int, name string) *Node {
-	var newNode *Node
-	newNode.Level = level
-	newNode.Name = name
-	return newNode
+// NewNodeByName 新增節點
+func (c *Input) NewNodeByName(level int, child []Node) Node {
+	return Node{Name: c.Name, Level: level, Children: child}
+}
+
+// NewNodeByParent 新增節點
+func (c *Input) NewNodeByParent(level int, child []Node) Node {
+	return Node{Name: c.Parent, Level: level, Children: child}
+}
+
+// AddChild 新增Child
+func (c *Node) AddChild(args ...Node) {
+	c.Children = append(c.Children, args...)
 }
